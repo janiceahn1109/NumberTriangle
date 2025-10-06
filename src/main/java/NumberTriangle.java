@@ -115,7 +115,7 @@ public class NumberTriangle {
      * @throws IOException may naturally occur if an issue reading the file occurs
      */
     // minor update for PR
-    //minor update for PR2
+    //minor update for PR
 
 
     public static NumberTriangle loadTriangle(String fname) throws IOException {
