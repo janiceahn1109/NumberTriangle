@@ -117,7 +117,6 @@ public class NumberTriangle {
     // minor update for PR
     //minor update for PR
 
-
     public static NumberTriangle loadTriangle(String fname) throws IOException {
         // open the file and get a BufferedReader object whose methods
         // are more convenient to work with when reading the file contents.
