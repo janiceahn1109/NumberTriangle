@@ -103,9 +103,6 @@ public class NumberTriangle {
         }
         return current.root;
     }
-        return -1;
-    }
-
     /** Read in the NumberTriangle structure from a file.
      *
      * You may assume that it is a valid format with a height of at least 1,
@@ -121,29 +118,45 @@ public class NumberTriangle {
         // open the file and get a BufferedReader object whose methods
         // are more convenient to work with when reading the file contents.
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
+        if (inputStream == null) {
+            throw new FileNotFoundException("File not found: " + fname);
+        }
+
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-
-        // TODO define any variables that you want to use to store things
-
-        // will need to return the top of the NumberTriangle,
-        // so might want a variable for that.
+        java.util.List<java.util.List<NumberTriangle>> levels = new java.util.ArrayList<>();
         NumberTriangle top = null;
 
         String line = br.readLine();
-        while (line != null) {
+        while (line != null && !line.trim().isEmpty()) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
+            String[] parts = line.trim().split("\\s+");
 
-            // TODO process the line
+            java.util.List<NumberTriangle> currentRow = new java.util.ArrayList<>();
 
-            //read the next line
+            for (String p : parts) {
+                currentRow.add(new NumberTriangle(Integer.parseInt(p)));
+            }
+
+            if (!levels.isEmpty()) {
+                java.util.List<NumberTriangle> prevRow = levels.get(levels.size() - 1);
+                for (int i = 0; i < prevRow.size(); i++) {
+                    prevRow.get(i).setLeft(currentRow.get(i));
+                    prevRow.get(i).setRight(currentRow.get(i + 1));
+                }
+            }
+
+            levels.add(currentRow);
             line = br.readLine();
         }
         br.close();
+
+        if (!levels.isEmpty()) {
+            top = levels.get(0).get(0);
+        }
+
         return top;
     }
+
 
     public static void main(String[] args) throws IOException {
 
@@ -156,3 +169,4 @@ public class NumberTriangle {
         System.out.println(mt.getRoot());
     }
 }
+
